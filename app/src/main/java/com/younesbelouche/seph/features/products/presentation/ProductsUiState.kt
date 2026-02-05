@@ -6,5 +6,6 @@ import com.younesbelouche.seph.features.products.presentation.models.ProductUi
 data class ProductsUiState(
     val productsWithReviews: List<ProductReviewsUi> = emptyList(),
     val searchInput: String = "",
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
 )

@@ -35,9 +35,9 @@ object UiMapper {
                     ReviewUi(
                         authorName = it.authorName,
                         text = it.text!!,
-                        rating = it.rating?.let { r -> "%.1f ★".format(r) }
+                        rating = it.rating.toString()
                     )
                 },
-            areReviewsVisible = !reviews.isHidden
+            areReviewsVisible = false
         )
 }

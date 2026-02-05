@@ -2,31 +2,43 @@ package com.younesbelouche.seph.features.products.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.younesbelouche.seph.core.util.Result
+import com.younesbelouche.seph.features.products.domain.entities.Product
+import com.younesbelouche.seph.features.products.domain.usecases.GetProductsUseCase
+import com.younesbelouche.seph.features.products.domain.usecases.GetReviewsUseCase
+import com.younesbelouche.seph.features.products.presentation.mappers.UiMapper.toUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductReviewsUi
-import com.younesbelouche.seph.features.products.presentation.models.ProductUi
-import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
 @HiltViewModel
-class ProductsViewModel @Inject constructor() : ViewModel() {
+class ProductsViewModel @Inject constructor(
+    private val getProductsUseCase: GetProductsUseCase,
+    private val getReviewsUseCase: GetReviewsUseCase
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProductsUiState())
-    val uiState: StateFlow<ProductsUiState> = _uiState
+    val uiState: StateFlow<ProductsUiState> = _uiState.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = ProductsUiState(),
+    )
     private var allProductsCache: List<ProductReviewsUi> = emptyList()
 
     init {
-        loadProducts()
+        loadProductsWithTheirReviews()
         observeSearchQuery()
     }
 
@@ -55,48 +67,76 @@ class ProductsViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun ProductReviewsUi.matchesSearchQuery(query: String): Boolean {
-        return product.name.contains(query, ignoreCase = true) ||
-                product.description.contains(query, ignoreCase = true) ||
-                product.brandName.contains(query, ignoreCase = true)
+        return product.name.contains(query, ignoreCase = true)
     }
 
-    private fun loadProducts() {
-        val baseProduct = ProductUi(
-            id = 0L,
-            name = "Wireless Headphones",
-            description = "Over-ear, noise-canceling, long battery life",
-            price = "$199.99",
-            imageSmallUrl = "",
-            imageLargeUrl = "",
-            brandName = "SoundMax",
-            isProductSet = false,
-            isSpecialBrand = true
-        )
 
-        val sampleReviews = listOf(
-            ReviewUi(authorName = "Alex M.", text = "Amazing sound quality!", rating = "5"),
-            ReviewUi(
-                authorName = "Jamie",
-                text = "Good, but battery could last longer.",
-                rating = "4"
-            ),
-            ReviewUi(authorName = null, text = "Decent for the price.", rating = "3")
-        )
+    private fun loadProductsWithTheirReviews() {
+        getProductsUseCase()
+            .onEach { productsResult ->
+                when (productsResult) {
+                    is Result.Loading -> {
+                        _uiState.update { it.copy(isLoading = true) }
+                    }
 
-        val sampleProducts = List(10) { index ->
-            ProductReviewsUi(
-                product = baseProduct.copy(
-                    id = index.toLong(),
-                    name = "Product ${index + 1}",
-                    price = "$${199 + index * 10}"
-                ),
-                reviews = sampleReviews,
-                areReviewsVisible = false
-            )
-        }
+                    is Result.Error -> {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                errorMessage = productsResult.exception.message
+                            )
+                        }
+                    }
 
-        allProductsCache = sampleProducts
-        _uiState.update { it.copy(productsWithReviews = sampleProducts) }
+                    is Result.Success -> {
+                        // Products fetched successfully, now we get reviews
+                        fetchReviewsForProducts(productsResult.data)
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
+    }
+
+    private fun fetchReviewsForProducts(products: List<Product>) {
+        getReviewsUseCase()
+            .onEach { reviewsResult ->
+                when (reviewsResult) {
+                    is Result.Loading -> {
+                        // Keep loading state
+                    }
+
+                    is Result.Error -> {
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                errorMessage = reviewsResult.exception.message
+                            )
+                        }
+                    }
+
+                    is Result.Success -> {
+                        val productsWithReviews = products.mapNotNull { product ->
+                            val productReviews = reviewsResult.data.find {
+                                it.productId == product.id
+                            }
+
+                            productReviews?.let {
+                                toUi(product, it)
+                            }
+                        }
+
+                        allProductsCache = productsWithReviews
+                        _uiState.update {
+                            it.copy(
+                                isLoading = false,
+                                productsWithReviews = productsWithReviews,
+                                errorMessage = null
+                            )
+                        }
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     fun toggleReviewsVisibility(productId: Long) {
