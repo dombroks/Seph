@@ -1,5 +1,7 @@
 package com.younesbelouche.seph.features.products.presentation
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -7,10 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.younesbelouche.seph.features.products.presentation.components.EmptyState
+import com.younesbelouche.seph.features.products.presentation.components.LoadingState
 import com.younesbelouche.seph.features.products.presentation.components.ProductsList
 import com.younesbelouche.seph.features.products.presentation.components.ProductsTopBar
-import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductUi
+import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
 
 @Composable
@@ -42,18 +46,39 @@ fun ProductsScreenContent(
                 searchInput = uiState.searchInput,
                 onSearchQueryChange = onSearchQueryChange
             )
-
         },
+    ) { paddingValues ->
+        Box(
+            modifier = modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+        ) {
+            when {
+                uiState.isLoading -> {
+                    LoadingState()
+                }
 
-        ) { paddingValues ->
-        ProductsList(
-            productsWithReviews = uiState.productsWithReviews,
-            onItemClick = onProductClick,
-            modifier = modifier.padding(paddingValues),
-        )
+                uiState.productsWithReviews.isEmpty() -> {
+                    EmptyState(
+                        searchQuery = uiState.searchInput,
+                        errorMessage = uiState.errorMessage
+                    )
+                }
 
+                else -> {
+                    ProductsList(
+                        productsWithReviews = uiState.productsWithReviews,
+                        onItemClick = onProductClick,
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
+            }
+        }
     }
 }
+
+
+
 
 
 @Preview(showBackground = true)
