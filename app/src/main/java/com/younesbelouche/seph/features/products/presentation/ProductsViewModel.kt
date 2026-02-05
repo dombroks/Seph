@@ -2,7 +2,10 @@ package com.younesbelouche.seph.features.products.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.younesbelouche.seph.core.util.Failure
 import com.younesbelouche.seph.core.util.Result
+import com.younesbelouche.seph.core.util.getMessage
+import com.younesbelouche.seph.core.util.toFailure
 import com.younesbelouche.seph.features.products.domain.entities.Product
 import com.younesbelouche.seph.features.products.domain.usecases.GetProductsUseCase
 import com.younesbelouche.seph.features.products.domain.usecases.GetReviewsUseCase
@@ -84,7 +87,7 @@ class ProductsViewModel @Inject constructor(
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
-                                errorMessage = productsResult.exception.message
+                                errorMessage = productsResult.exception.getMessage()
                             )
                         }
                     }
@@ -110,7 +113,7 @@ class ProductsViewModel @Inject constructor(
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
-                                errorMessage = reviewsResult.exception.message
+                                errorMessage = reviewsResult.exception.getMessage()
                             )
                         }
                     }
@@ -139,6 +142,7 @@ class ProductsViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
     }
+
 
     fun toggleReviewsVisibility(productId: Long) {
         _uiState.update { currentState ->
