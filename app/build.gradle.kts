@@ -2,13 +2,14 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.android.ksp)
+    alias(libs.plugins.hilt.android)
 }
 
 android {
     namespace = "com.younesbelouche.seph"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.younesbelouche.seph"
@@ -57,4 +58,37 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+
+    // Turbine
+    testImplementation(libs.turbine)
+
+    // Truth
+    testImplementation(libs.truth)
+
+    // Retrofit and OkHttp dependencies
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
+
+    // Paging
+    implementation(libs.androidx.paging)
+    implementation(libs.androidx.paging.compose)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+    androidTestImplementation(libs.androidx.navigation.testing)
+
+    // Coil
+    implementation(libs.coil.compose)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
+
+    // mockk
+    testImplementation(libs.mockk)
+    androidTestImplementation(libs.mockk.android)
 }
