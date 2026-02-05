@@ -1,5 +1,6 @@
 package com.younesbelouche.seph.features.products.presentation.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,8 +26,10 @@ internal fun ProductsTopBar(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 24.dp)
+                .padding(horizontal = 16.dp, vertical = 24.dp),
         ) {
+            Spacer(modifier = Modifier.height(12.dp))
+
             Text(
                 text = "Products",
                 style = MaterialTheme.typography.headlineSmall,

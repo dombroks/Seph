@@ -8,6 +8,7 @@ import com.younesbelouche.seph.features.products.domain.usecases.GetProductsUseC
 import com.younesbelouche.seph.features.products.domain.usecases.GetReviewsUseCase
 import com.younesbelouche.seph.features.products.presentation.mappers.UiMapper.toUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
+import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -150,6 +151,50 @@ class ProductsViewModel @Inject constructor(
                     }
                 }
             )
+        }
+    }
+
+    fun toggleReviewsSortOption() {
+        _uiState.update { currentState ->
+            val newSortOption = when (currentState.reviewsSortOption) {
+                ReviewsSortOption.Best2Worst -> ReviewsSortOption.Worst2Best
+                ReviewsSortOption.Worst2Best -> ReviewsSortOption.Best2Worst
+            }
+
+            val productsWithSortedReviews =
+                currentState.productsWithReviews.map { productWithReviews ->
+                    productWithReviews.copy(
+                        reviews = sortReviews(productWithReviews.reviews, newSortOption),
+                        reviewsSortOption = newSortOption
+                    )
+                }
+
+            // Also update the cache
+            allProductsCache = productsWithSortedReviews
+
+            currentState.copy(
+                reviewsSortOption = newSortOption,
+                productsWithReviews = productsWithSortedReviews
+            )
+        }
+    }
+
+    private fun sortReviews(
+        reviews: List<ReviewUi>,
+        sortOption: ReviewsSortOption
+    ): List<ReviewUi> {
+        return when (sortOption) {
+            ReviewsSortOption.Best2Worst -> {
+                reviews.sortedByDescending { review ->
+                    review.rating?.split(" ")?.firstOrNull()?.toDoubleOrNull() ?: 0.0
+                }
+            }
+
+            ReviewsSortOption.Worst2Best -> {
+                reviews.sortedBy { review ->
+                    review.rating?.split(" ")?.firstOrNull()?.toDoubleOrNull() ?: 0.0
+                }
+            }
         }
     }
 

@@ -3,6 +3,12 @@ package com.younesbelouche.seph.features.products.presentation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +33,7 @@ fun ProductsScreen(
         uiState = uiState,
         onProductClick = productsViewModel::toggleReviewsVisibility,
         onSearchQueryChange = productsViewModel::updateSearchQuery,
+        onSortClick = productsViewModel::toggleReviewsSortOption,
         modifier = modifier
     )
 
@@ -37,6 +44,7 @@ fun ProductsScreenContent(
     uiState: ProductsUiState,
     onProductClick: (Long) -> Unit,
     onSearchQueryChange: (String) -> Unit,
+    onSortClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -47,6 +55,24 @@ fun ProductsScreenContent(
                 onSearchQueryChange = onSearchQueryChange
             )
         },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onSortClick,
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            ) {
+                Icon(
+                    imageVector = when (uiState.reviewsSortOption) {
+                        ReviewsSortOption.Best2Worst -> Icons.Default.KeyboardArrowDown
+                        ReviewsSortOption.Worst2Best -> Icons.Default.KeyboardArrowUp
+                    },
+                    contentDescription = when (uiState.reviewsSortOption) {
+                        ReviewsSortOption.Best2Worst -> "Sort: Best to Worst"
+                        ReviewsSortOption.Worst2Best -> "Sort: Worst to Best"
+                    }
+                )
+            }
+        }
     ) { paddingValues ->
         Box(
             modifier = modifier
@@ -76,9 +102,6 @@ fun ProductsScreenContent(
         }
     }
 }
-
-
-
 
 
 @Preview(showBackground = true)
@@ -123,6 +146,7 @@ private fun ProductsScreenPreview() {
         uiState = uiState,
         onProductClick = {},
         onSearchQueryChange = {},
+        onSortClick = {},
         modifier = Modifier
     )
 }
