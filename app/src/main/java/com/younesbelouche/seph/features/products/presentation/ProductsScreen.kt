@@ -49,7 +49,7 @@ fun ProductsScreenContent(
         topBar = {
             Surface(
                 tonalElevation = 4.dp,
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.surfaceContainer,
             ) {
                 Column(
                     modifier = Modifier
@@ -60,10 +60,10 @@ fun ProductsScreenContent(
                         text = "Products",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.primary
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     ProductsTopSearchBar(
                         query = uiState.searchInput,

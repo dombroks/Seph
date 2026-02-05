@@ -118,13 +118,15 @@ private fun ReviewItem(reviewUi: ReviewUi) {
         reviewUi.authorName?.let {
             Text(
                 text = it,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary
             )
         }
 
         Text(
             text = reviewUi.text,
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         RatingStars(reviewUi.rating ?: "")
@@ -147,12 +149,14 @@ private fun ProductHeader(
     ) {
         Text(
             text = product.name,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Text(
             text = product.price,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
