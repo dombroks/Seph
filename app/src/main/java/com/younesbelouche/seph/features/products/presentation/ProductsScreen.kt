@@ -19,6 +19,7 @@ import com.younesbelouche.seph.features.products.presentation.components.EmptySt
 import com.younesbelouche.seph.features.products.presentation.components.LoadingState
 import com.younesbelouche.seph.features.products.presentation.components.ProductsList
 import com.younesbelouche.seph.features.products.presentation.components.ProductsTopBar
+import com.younesbelouche.seph.features.products.presentation.components.SortReviewsFloatingActionButton
 import com.younesbelouche.seph.features.products.presentation.models.ProductUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
@@ -56,22 +57,10 @@ fun ProductsScreenContent(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = onSortClick,
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            ) {
-                Icon(
-                    imageVector = when (uiState.reviewsSortOption) {
-                        ReviewsSortOption.Best2Worst -> Icons.Default.KeyboardArrowDown
-                        ReviewsSortOption.Worst2Best -> Icons.Default.KeyboardArrowUp
-                    },
-                    contentDescription = when (uiState.reviewsSortOption) {
-                        ReviewsSortOption.Best2Worst -> "Sort: Best to Worst"
-                        ReviewsSortOption.Worst2Best -> "Sort: Worst to Best"
-                    }
-                )
-            }
+            SortReviewsFloatingActionButton(
+                uiState = uiState,
+                onSortClick = onSortClick
+            )
         }
     ) { paddingValues ->
         Box(
