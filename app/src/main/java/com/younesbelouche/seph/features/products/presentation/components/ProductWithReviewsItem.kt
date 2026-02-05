@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlin.math.roundToInt
 import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
@@ -69,41 +71,30 @@ private fun RatingStars(
     rating: String,
     modifier: Modifier = Modifier
 ) {
-
     val ratingValue = rating.split(" ").firstOrNull()?.toFloatOrNull() ?: 0f
-    val fullStars = ratingValue.toInt()
-    val halfStar = (ratingValue % 1 >= 0.5f)
+    val stars = ratingValue.roundToInt().coerceIn(0, 5)
 
     Row(modifier = modifier) {
-        repeat(fullStars) {
+        repeat(stars) {
             Icon(
-                imageVector = Icons.Default.Star,
+                imageVector = Icons.Filled.Star,
                 contentDescription = null,
                 tint = Color(0xFFFFD700),
                 modifier = Modifier.size(16.dp)
             )
         }
 
-        if (halfStar) {
+        repeat(5 - stars) {
             Icon(
-                // should be star half
-                imageVector = Icons.Default.Star,
+                imageVector = Icons.Outlined.Star,
                 contentDescription = null,
-                tint = Color(0xFFFFD700),
-                modifier = Modifier.size(16.dp)
-            )
-        }
-
-        repeat(5 - fullStars - if (halfStar) 1 else 0) {
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = null,
-                tint = Color(0xFFFFD700),
+                tint = Color.Gray.copy(alpha = 0.5f),
                 modifier = Modifier.size(16.dp)
             )
         }
     }
 }
+
 
 
 @Composable

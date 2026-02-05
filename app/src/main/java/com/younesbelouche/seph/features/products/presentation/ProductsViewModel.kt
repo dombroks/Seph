@@ -125,7 +125,14 @@ class ProductsViewModel @Inject constructor(
                             }
 
                             productReviews?.let {
-                                toUi(product, it)
+                                val productWithReviews = toUi(product, it)
+                                // Apply default Best2Worst sorting
+                                productWithReviews.copy(
+                                    reviews = sortReviews(
+                                        productWithReviews.reviews,
+                                        ReviewsSortOption.Best2Worst
+                                    )
+                                )
                             }
                         }
 

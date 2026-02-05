@@ -23,8 +23,8 @@ internal fun SortReviewsFloatingActionButton(
     ) {
         Icon(
             imageVector = when (uiState.reviewsSortOption) {
-                ReviewsSortOption.Best2Worst -> Icons.Default.KeyboardArrowDown
-                ReviewsSortOption.Worst2Best -> Icons.Default.KeyboardArrowUp
+                ReviewsSortOption.Best2Worst -> Icons.Default.KeyboardArrowUp
+                ReviewsSortOption.Worst2Best -> Icons.Default.KeyboardArrowDown
             },
             contentDescription = when (uiState.reviewsSortOption) {
                 ReviewsSortOption.Best2Worst -> "Sort: Best to Worst"
