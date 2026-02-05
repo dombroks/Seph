@@ -3,7 +3,6 @@ package com.younesbelouche.seph.features.products.di
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.Strictness
 import com.younesbelouche.seph.core.Constants
 import com.younesbelouche.seph.features.products.data.ProductsApi
 import com.younesbelouche.seph.features.products.data.interceptors.CacheInterceptor
@@ -47,7 +46,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideGson(): Gson {
-        return GsonBuilder().serializeNulls().setStrictness(Strictness.LENIENT).create()
+        return GsonBuilder().serializeNulls().setLenient().create()
     }
 
     @Singleton

@@ -1,0 +1,152 @@
+package com.younesbelouche.seph.features.products.presentation.components
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.younesbelouche.seph.features.products.presentation.models.ProductReviewsUi
+import com.younesbelouche.seph.features.products.presentation.models.ProductUi
+import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
+
+@Composable
+internal fun ProductWithReviewsItem(
+    productWithReviews: ProductReviewsUi,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        ProductHeader(
+            product = productWithReviews.product,
+            onClick = onClick,
+            areReviewsVisible = productWithReviews.areReviewsVisible
+        )
+
+        AnimatedVisibility(visible = productWithReviews.areReviewsVisible) {
+            ReviewsList(reviews = productWithReviews.reviews)
+        }
+
+    }
+}
+
+@Composable
+private fun ReviewsList(reviews: List<ReviewUi>) {
+    LazyColumn(
+        modifier = Modifier
+            .padding(top = 8.dp, start = 32.dp)
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        items(
+            items = reviews,
+        ) { review ->
+            ReviewItem(review)
+        }
+    }
+}
+
+@Composable
+private fun ReviewItem(reviewUi: ReviewUi) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+    ) {
+        reviewUi.authorName?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
+
+        Text(
+            text = reviewUi.text,
+            style = MaterialTheme.typography.bodySmall
+        )
+
+        reviewUi.rating?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
+    }
+}
+
+@Composable
+private fun ProductHeader(
+    product: ProductUi,
+    onClick: () -> Unit,
+    areReviewsVisible: Boolean
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(8.dp)
+    ) {
+        Text(
+            text = product.name,
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Text(
+            text = product.price,
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Preview(
+    showBackground = true,
+)
+@Composable
+private fun ProductWithReviewsItemPreview() {
+    val product = ProductUi(
+        id = 1L,
+        name = "Wireless Headphones",
+        description = "Over-ear, noise-canceling, long battery life",
+        price = "$199.99",
+        imageSmallUrl = "https://example.com/images/headphones_small.jpg",
+        imageLargeUrl = "https://example.com/images/headphones_large.jpg",
+        brandName = "SoundMax",
+        isProductSet = false,
+        isSpecialBrand = true
+    )
+
+    val reviews = listOf(
+        ReviewUi(authorName = "Alex M.", text = "Amazing sound quality!", rating = "5 ★"),
+        ReviewUi(
+            authorName = "Jamie",
+            text = "Good, but battery could last longer.",
+            rating = "4 ★"
+        ),
+        ReviewUi(authorName = null, text = "Decent for the price.", rating = "3 ★")
+    )
+
+    val productWithReviews = ProductReviewsUi(
+        product = product,
+        reviews = reviews,
+        areReviewsVisible = true
+    )
+
+    ProductWithReviewsItem(
+        productWithReviews = productWithReviews,
+        onClick = {}
+    )
+}

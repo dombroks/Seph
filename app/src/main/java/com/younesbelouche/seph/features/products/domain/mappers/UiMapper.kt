@@ -20,24 +20,24 @@ object UiMapper {
             isSpecialBrand = product.isSpecialBrand
         )
 
-    fun toUiList(products: List<Product>): List<ProductUi> =
+    fun toProductUiList(products: List<Product>): List<ProductUi> =
         products.map { toUi(it) }
 
-    fun toUi(reviews: ProductReviews): ProductReviewsUi =
+    fun toUi(
+        product: Product,
+        reviews: ProductReviews
+    ): ProductReviewsUi =
         ProductReviewsUi(
-            productId = reviews.productId,
-            isHidden = reviews.isHidden,
+            product = toUi(product),
             reviews = reviews.reviews
-                .filter { it.text != null }     // remove empty reviews
+                .filter { !it.text.isNullOrBlank() } // remove empty reviews
                 .map {
                     ReviewUi(
                         authorName = it.authorName,
                         text = it.text!!,
                         rating = it.rating?.let { r -> "%.1f ★".format(r) }
                     )
-                }
+                },
+            areReviewsVisible = !reviews.isHidden
         )
-
-    fun toUiList(reviews: List<ProductReviews>): List<ProductReviewsUi> =
-        reviews.map { toUi(it) }
 }
