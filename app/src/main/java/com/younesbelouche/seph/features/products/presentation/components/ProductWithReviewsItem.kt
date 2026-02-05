@@ -2,6 +2,7 @@ package com.younesbelouche.seph.features.products.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -139,7 +144,10 @@ private fun ProductHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick() }
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+            ) { onClick() }
             .padding(8.dp)
     ) {
         Text(
@@ -181,14 +189,16 @@ private fun ProductWithReviewsItemPreview() {
         ReviewUi(authorName = null, text = "Decent for the price.", rating = "3")
     )
 
+    var areReviewsVisible by remember { mutableStateOf(true) }
+
     val productWithReviews = ProductReviewsUi(
         product = product,
         reviews = reviews,
-        areReviewsVisible = true
+        areReviewsVisible = areReviewsVisible
     )
 
     ProductWithReviewsItem(
         productWithReviews = productWithReviews,
-        onClick = {}
+        onClick = { areReviewsVisible = !areReviewsVisible }
     )
 }

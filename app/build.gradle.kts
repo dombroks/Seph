@@ -21,6 +21,18 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    packaging {
+        resources {
+            excludes += listOf(
+                "META-INF/LICENSE-notice.md",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.md",
+                "META-INF/NOTICE",
+                "META-INF/DEPENDENCIES"
+            )
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
