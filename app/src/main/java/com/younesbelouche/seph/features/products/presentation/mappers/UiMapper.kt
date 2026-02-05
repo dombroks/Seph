@@ -1,4 +1,4 @@
-package com.younesbelouche.seph.features.products.domain.mappers
+package com.younesbelouche.seph.features.products.presentation.mappers
 
 import com.younesbelouche.seph.features.products.domain.entities.Product
 import com.younesbelouche.seph.features.products.domain.entities.ProductReviews
@@ -30,7 +30,7 @@ object UiMapper {
         ProductReviewsUi(
             product = toUi(product),
             reviews = reviews.reviews
-                .filter { !it.text.isNullOrBlank() } // remove empty reviews
+                .filter { !it.text.isNullOrBlank() }
                 .map {
                     ReviewUi(
                         authorName = it.authorName,
