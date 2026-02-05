@@ -7,13 +7,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.younesbelouche.seph.features.products.presentation.models.ProductReviewsUi
@@ -61,6 +66,48 @@ private fun ReviewsList(reviews: List<ReviewUi>) {
 }
 
 @Composable
+private fun RatingStars(
+    rating: String,
+    modifier: Modifier = Modifier
+) {
+
+    val ratingValue = rating.split(" ").firstOrNull()?.toFloatOrNull() ?: 0f
+    val fullStars = ratingValue.toInt()
+    val halfStar = (ratingValue % 1 >= 0.5f)
+
+    Row(modifier = modifier) {
+        repeat(fullStars) {
+            Icon(
+                imageVector = Icons.Default.Star,
+                contentDescription = null,
+                tint = Color(0xFFFFD700),
+                modifier = Modifier.size(16.dp)
+            )
+        }
+
+        if (halfStar) {
+            Icon(
+                // should be star half
+                imageVector = Icons.Default.Star,
+                contentDescription = null,
+                tint = Color(0xFFFFD700),
+                modifier = Modifier.size(16.dp)
+            )
+        }
+
+        repeat(5 - fullStars - if (halfStar) 1 else 0) {
+            Icon(
+                imageVector = Icons.Default.Star,
+                contentDescription = null,
+                tint = Color(0xFFFFD700),
+                modifier = Modifier.size(16.dp)
+            )
+        }
+    }
+}
+
+
+@Composable
 private fun ReviewItem(reviewUi: ReviewUi) {
     Column(
         modifier = Modifier
@@ -79,12 +126,7 @@ private fun ReviewItem(reviewUi: ReviewUi) {
             style = MaterialTheme.typography.bodySmall
         )
 
-        reviewUi.rating?.let {
-            Text(
-                text = it,
-                style = MaterialTheme.typography.labelSmall
-            )
-        }
+        RatingStars(reviewUi.rating ?: "")
     }
 }
 
@@ -130,13 +172,13 @@ private fun ProductWithReviewsItemPreview() {
     )
 
     val reviews = listOf(
-        ReviewUi(authorName = "Alex M.", text = "Amazing sound quality!", rating = "5 ★"),
+        ReviewUi(authorName = "Alex M.", text = "Amazing sound quality!", rating = "5"),
         ReviewUi(
             authorName = "Jamie",
             text = "Good, but battery could last longer.",
-            rating = "4 ★"
+            rating = "4"
         ),
-        ReviewUi(authorName = null, text = "Decent for the price.", rating = "3 ★")
+        ReviewUi(authorName = null, text = "Decent for the price.", rating = "3")
     )
 
     val productWithReviews = ProductReviewsUi(
