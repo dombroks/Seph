@@ -16,7 +16,6 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,8 +42,7 @@ internal fun ProductWithReviewsItem(
     ) {
         ProductHeader(
             product = productWithReviews.product,
-            onClick = onClick,
-            areReviewsVisible = productWithReviews.areReviewsVisible
+            onClick = onClick
         )
 
         AnimatedVisibility(visible = productWithReviews.areReviewsVisible) {
@@ -138,8 +136,7 @@ private fun ReviewItem(reviewUi: ReviewUi) {
 @Composable
 private fun ProductHeader(
     product: ProductUi,
-    onClick: () -> Unit,
-    areReviewsVisible: Boolean
+    onClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
