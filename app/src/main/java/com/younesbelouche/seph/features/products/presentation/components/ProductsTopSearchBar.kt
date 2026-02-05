@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 internal fun ProductsTopSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
-    onSearch: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TextField(
@@ -37,9 +36,6 @@ internal fun ProductsTopSearchBar(
         leadingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = null) },
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Search
-        ),
-        keyboardActions = KeyboardActions(
-            onSearch = { onSearch() }
         ),
         colors = TextFieldDefaults.colors(
             unfocusedIndicatorColor = Color.Transparent,
@@ -59,7 +55,6 @@ private fun ProductsTopSearchBarPreview() {
     ProductsTopSearchBar(
         query = query,
         onQueryChange = { query = it },
-        onSearch = {},
         modifier = Modifier.padding(16.dp)
     )
 }

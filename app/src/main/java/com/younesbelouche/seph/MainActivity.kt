@@ -17,7 +17,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             SephTheme {
                 ProductsScreen(
-                    onSearch = {},
                     productsViewModel = hiltViewModel()
                 )
             }

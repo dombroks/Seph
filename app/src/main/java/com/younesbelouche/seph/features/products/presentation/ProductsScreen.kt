@@ -24,7 +24,6 @@ import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
 
 @Composable
 fun ProductsScreen(
-    onSearch: (String) -> Unit,
     productsViewModel: ProductsViewModel,
     modifier: Modifier = Modifier
 ) {
@@ -32,6 +31,7 @@ fun ProductsScreen(
     ProductsScreenContent(
         uiState = uiState,
         onProductClick = productsViewModel::toggleReviewsVisibility,
+        onSearchQueryChange = productsViewModel::updateSearchQuery,
         modifier = modifier
     )
 
@@ -41,6 +41,7 @@ fun ProductsScreen(
 fun ProductsScreenContent(
     uiState: ProductsUiState,
     onProductClick: (Long) -> Unit,
+    onSearchQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -65,8 +66,7 @@ fun ProductsScreenContent(
 
                     ProductsTopSearchBar(
                         query = uiState.searchInput,
-                        onQueryChange = {},
-                        onSearch = {},
+                        onQueryChange = onSearchQueryChange,
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -126,6 +126,7 @@ private fun ProductsScreenPreview() {
     ProductsScreenContent(
         uiState = uiState,
         onProductClick = {},
+        onSearchQueryChange = {},
         modifier = Modifier
     )
 }
