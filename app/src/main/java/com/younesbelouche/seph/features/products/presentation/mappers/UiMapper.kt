@@ -2,7 +2,7 @@ package com.younesbelouche.seph.features.products.presentation.mappers
 
 import com.younesbelouche.seph.features.products.domain.entities.Product
 import com.younesbelouche.seph.features.products.domain.entities.ProductReviews
-import com.younesbelouche.seph.features.products.presentation.models.ProductReviewsUi
+import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
 
@@ -26,8 +26,8 @@ object UiMapper {
     fun toUi(
         product: Product,
         reviews: ProductReviews
-    ): ProductReviewsUi =
-        ProductReviewsUi(
+    ): ProductWithReviewsUi =
+        ProductWithReviewsUi(
             product = toUi(product),
             reviews = reviews.reviews
                 .filter { !it.text.isNullOrBlank() }

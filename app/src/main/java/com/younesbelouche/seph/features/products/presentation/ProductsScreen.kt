@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.younesbelouche.seph.features.products.presentation.components.ProductsList
 import com.younesbelouche.seph.features.products.presentation.components.ProductsTopBar
-import com.younesbelouche.seph.features.products.presentation.models.ProductReviewsUi
+import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
 
@@ -78,7 +78,7 @@ private fun ProductsScreenPreview() {
     )
 
     val sampleProducts = List(10) { index ->
-        ProductReviewsUi(
+        ProductWithReviewsUi(
             product = baseProduct.copy(
                 id = index.toLong(),
                 name = "Product ${index + 1}",

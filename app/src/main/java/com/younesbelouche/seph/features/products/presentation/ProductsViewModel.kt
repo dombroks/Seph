@@ -7,7 +7,7 @@ import com.younesbelouche.seph.features.products.domain.entities.Product
 import com.younesbelouche.seph.features.products.domain.usecases.GetProductsUseCase
 import com.younesbelouche.seph.features.products.domain.usecases.GetReviewsUseCase
 import com.younesbelouche.seph.features.products.presentation.mappers.UiMapper.toUi
-import com.younesbelouche.seph.features.products.presentation.models.ProductReviewsUi
+import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +35,7 @@ class ProductsViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(),
         initialValue = ProductsUiState(),
     )
-    private var allProductsCache: List<ProductReviewsUi> = emptyList()
+    private var allProductsCache: List<ProductWithReviewsUi> = emptyList()
 
     init {
         loadProductsWithTheirReviews()
@@ -66,7 +66,7 @@ class ProductsViewModel @Inject constructor(
         _uiState.update { it.copy(productsWithReviews = filtered) }
     }
 
-    private fun ProductReviewsUi.matchesSearchQuery(query: String): Boolean {
+    private fun ProductWithReviewsUi.matchesSearchQuery(query: String): Boolean {
         return product.name.contains(query, ignoreCase = true)
     }
 

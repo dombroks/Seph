@@ -11,13 +11,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.younesbelouche.seph.features.products.presentation.models.ProductReviewsUi
+import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
 
 @Composable
 internal fun ProductsList(
-    productsWithReviews: List<ProductReviewsUi>,
+    productsWithReviews: List<ProductWithReviewsUi>,
     onItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -61,7 +61,7 @@ private fun ProductsListPreview() {
     var productsWithReviews by remember {
         mutableStateOf(
             List(10) { index ->
-                ProductReviewsUi(
+                ProductWithReviewsUi(
                     product = baseProduct.copy(
                         id = index.toLong(),
                         name = "Product ${index + 1}",
