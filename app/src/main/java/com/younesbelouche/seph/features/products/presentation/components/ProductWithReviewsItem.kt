@@ -38,7 +38,7 @@ internal fun ProductWithReviewsItem(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
     ) {
         ProductHeader(
             product = productWithReviews.product,
@@ -54,16 +54,14 @@ internal fun ProductWithReviewsItem(
 
 @Composable
 private fun ReviewsList(reviews: List<ReviewUi>) {
-    LazyColumn(
+    Column(
         modifier = Modifier
             .padding(top = 8.dp, start = 32.dp)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(
-            items = reviews,
-        ) { review ->
-            ReviewItem(review)
+        reviews.forEach {
+            ReviewItem(reviewUi = it)
         }
     }
 }
