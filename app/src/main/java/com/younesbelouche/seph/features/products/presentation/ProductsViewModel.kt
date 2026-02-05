@@ -23,7 +23,6 @@ class ProductsViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProductsUiState())
     val uiState: StateFlow<ProductsUiState> = _uiState
-
     private var allProductsCache: List<ProductReviewsUi> = emptyList()
 
     init {

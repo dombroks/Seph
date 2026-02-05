@@ -44,6 +44,7 @@ fun ProductsScreenContent(
     onSearchQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     Scaffold(
         topBar = {
             Surface(
