@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun ProductsTopSearchBar(
+internal fun ProductsSearchBar(
     query: String,
     onQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -69,10 +69,10 @@ internal fun ProductsTopSearchBar(
     showBackground = true,
 )
 @Composable
-private fun ProductsTopSearchBarPreview() {
+private fun ProductsSearchBarPreview() {
     var query = " A simple query "
 
-    ProductsTopSearchBar(
+    ProductsSearchBar(
         query = query,
         onQueryChange = { query = it },
         modifier = Modifier.padding(16.dp)

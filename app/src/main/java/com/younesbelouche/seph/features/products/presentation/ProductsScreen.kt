@@ -17,7 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.younesbelouche.seph.features.products.presentation.components.ProductsList
-import com.younesbelouche.seph.features.products.presentation.components.ProductsTopSearchBar
+import com.younesbelouche.seph.features.products.presentation.components.ProductsSearchBar
+import com.younesbelouche.seph.features.products.presentation.components.ProductsTopBar
 import com.younesbelouche.seph.features.products.presentation.models.ProductReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
@@ -47,31 +48,10 @@ fun ProductsScreenContent(
 
     Scaffold(
         topBar = {
-            Surface(
-                tonalElevation = 4.dp,
-                color = MaterialTheme.colorScheme.surfaceContainer,
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 24.dp)
-                ) {
-                    Text(
-                        text = "Products",
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    ProductsTopSearchBar(
-                        query = uiState.searchInput,
-                        onQueryChange = onSearchQueryChange,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
+            ProductsTopBar(
+                searchInput = uiState.searchInput,
+                onSearchQueryChange = onSearchQueryChange
+            )
 
         },
 
