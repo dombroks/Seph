@@ -3,4 +3,9 @@
     <string name="products">Products</string>
     <string name="discover_our_collections">Discover our collection</string>
     <string name="reviews_count">%1$d reviews</string>
+    <string name="general_error_message">Oops! Something went wrong</string>
+    <string name="no_products_found">No products found</string>
+    <string name="no_products_available">No products available</string>
+    <string name="adjust_search_input">Try adjusting your search to find what you\'re looking for</string>
+    <string name="check_later">Check back later for new products</string>
 </resources>

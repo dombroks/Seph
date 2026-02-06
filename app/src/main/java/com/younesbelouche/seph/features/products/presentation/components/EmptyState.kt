@@ -16,9 +16,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.younesbelouche.seph.R
 
 @Composable
 internal fun EmptyState(
@@ -46,9 +48,9 @@ internal fun EmptyState(
 
             Text(
                 text = when {
-                    errorMessage != null -> "Oops! Something went wrong"
-                    searchQuery.isNotBlank() -> "No products found"
-                    else -> "No products available"
+                    errorMessage != null -> stringResource(R.string.general_error_message)
+                    searchQuery.isNotBlank() -> stringResource(R.string.no_products_found)
+                    else -> stringResource(R.string.no_products_available)
                 },
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -60,8 +62,8 @@ internal fun EmptyState(
             Text(
                 text = when {
                     errorMessage != null -> errorMessage
-                    searchQuery.isNotBlank() -> "Try adjusting your search to find what you're looking for"
-                    else -> "Check back later for new products"
+                    searchQuery.isNotBlank() -> stringResource(R.string.adjust_search_input)
+                    else -> stringResource(R.string.check_later)
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
