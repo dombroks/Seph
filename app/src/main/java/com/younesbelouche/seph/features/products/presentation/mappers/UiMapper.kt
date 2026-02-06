@@ -33,7 +33,7 @@ object UiMapper {
                 .filter { !it.text.isNullOrBlank() }
                 .map {
                     ReviewUi(
-                        authorName = it.authorName,
+                        authorName = it.authorName ?: "Unknown",
                         text = it.text!!,
                         rating = it.rating.toString()
                     )
