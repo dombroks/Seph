@@ -78,7 +78,6 @@ app/
 |--------------------|--------------------------|
 | Jetpack Compose    | Declarative UI framework |
 | Material 3         | Design system            |
-| Coil               | Image loading            |
 
 
 ### Architecture & DI
