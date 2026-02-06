@@ -24,10 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlin.math.roundToInt
-import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
+import com.younesbelouche.seph.core.theme.StarGold
 import com.younesbelouche.seph.features.products.presentation.models.ProductUi
+import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
+import kotlin.math.roundToInt
 
 @Composable
 internal fun ProductWithReviewsItem(
@@ -79,7 +80,7 @@ private fun RatingStars(
             Icon(
                 imageVector = Icons.Filled.Star,
                 contentDescription = null,
-                tint = Color(0xFFFFD700),
+                tint = StarGold,
                 modifier = Modifier.size(16.dp)
             )
         }

@@ -11,3 +11,7 @@ val LightBlue80 = Color(0xFF80D8FF)
 val Blue40 = Color(0xFF1976D2)
 val BlueGrey40 = Color(0xFF546E7A)
 val LightBlue40 = Color(0xFF0288D1)
+
+
+val StarGold = Color(0xFFFFD700)
+
