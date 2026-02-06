@@ -31,9 +31,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.younesbelouche.seph.R
 import com.younesbelouche.seph.core.theme.StarGold
 import com.younesbelouche.seph.features.products.presentation.models.ProductUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
@@ -61,7 +63,11 @@ internal fun ProductWithReviewsItem(
         ) {
             ProductHeader(
                 product = productWithReviews.product,
-                reviewCount = productWithReviews.reviews.size,
+                reviewsAverage = if (productWithReviews.reviews.isNotEmpty()) {
+                    productWithReviews.reviews.mapNotNull { it.rating?.toFloatOrNull() }.average()
+                        .toFloat()
+
+                } else 0f,
                 areReviewsVisible = productWithReviews.areReviewsVisible,
                 onClick = onClick
             )
@@ -89,7 +95,7 @@ private fun ReviewsList(reviews: List<ReviewUi>) {
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Text(
-            text = "Reviews (${reviews.size})",
+            text = stringResource(R.string.reviews_count, reviews.size),
             style = MaterialTheme.typography.titleSmall,
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onSurface
@@ -129,7 +135,6 @@ private fun RatingStars(
         }
     }
 }
-
 
 
 @Composable
@@ -174,7 +179,7 @@ private fun ReviewItem(reviewUi: ReviewUi) {
 @Composable
 private fun ProductHeader(
     product: ProductUi,
-    reviewCount: Int,
+    reviewsAverage: Float,
     areReviewsVisible: Boolean,
     onClick: () -> Unit
 ) {
@@ -228,14 +233,9 @@ private fun ProductHeader(
                 )
             }
 
-            if (reviewCount > 0) {
-                Text(
-                    text = "$reviewCount ${if (reviewCount == 1) "review" else "reviews"}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.secondary
-                )
-            }
+            RatingStars(rating = reviewsAverage.toString())
         }
+
 
         Icon(
             imageVector = Icons.Default.KeyboardArrowDown,
@@ -246,7 +246,10 @@ private fun ProductHeader(
             tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
+
+
 }
+
 
 @Preview(
     showBackground = true,

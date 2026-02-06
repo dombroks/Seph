@@ -2,4 +2,5 @@
     <string name="app_name">Seph</string>
     <string name="products">Products</string>
     <string name="discover_our_collections">Discover our collection</string>
+    <string name="reviews_count">%1$d reviews</string>
 </resources>
