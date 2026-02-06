@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Seph</string>
+    <string name="products">Products</string>
+    <string name="discover_our_collections">Discover our collection</string>
 </resources>

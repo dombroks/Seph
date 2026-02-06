@@ -2,14 +2,12 @@ package com.younesbelouche.seph.features.products.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.younesbelouche.seph.core.util.Failure
 import com.younesbelouche.seph.core.util.Result
 import com.younesbelouche.seph.core.util.getMessage
-import com.younesbelouche.seph.core.util.toFailure
 import com.younesbelouche.seph.features.products.domain.entities.Product
 import com.younesbelouche.seph.features.products.domain.usecases.GetProductsUseCase
 import com.younesbelouche.seph.features.products.domain.usecases.GetReviewsUseCase
-import com.younesbelouche.seph.features.products.presentation.mappers.UiMapper.toUi
+import com.younesbelouche.seph.features.products.presentation.mappers.UiMapper.toProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ProductWithReviewsUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -125,7 +123,7 @@ class ProductsViewModel @Inject constructor(
                             }
 
                             productReviews?.let {
-                                val productWithReviews = toUi(product, it)
+                                val productWithReviews = toProductWithReviewsUi(product, it)
                                 // Apply default Best2Worst sorting
                                 productWithReviews.copy(
                                     reviews = sortReviews(

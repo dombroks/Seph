@@ -7,7 +7,7 @@ import com.younesbelouche.seph.features.products.presentation.models.ProductUi
 import com.younesbelouche.seph.features.products.presentation.models.ReviewUi
 
 object UiMapper {
-    fun toUi(product: Product): ProductUi =
+    fun toProductUi(product: Product): ProductUi =
         ProductUi(
             id = product.id,
             name = product.name,
@@ -20,21 +20,18 @@ object UiMapper {
             isSpecialBrand = product.isSpecialBrand
         )
 
-    fun toProductUiList(products: List<Product>): List<ProductUi> =
-        products.map { toUi(it) }
 
-    fun toUi(
+    fun toProductWithReviewsUi(
         product: Product,
         reviews: ProductReviews
     ): ProductWithReviewsUi =
         ProductWithReviewsUi(
-            product = toUi(product),
+            product = toProductUi(product),
             reviews = reviews.reviews
-                .filter { !it.text.isNullOrBlank() }
                 .map {
                     ReviewUi(
                         authorName = it.authorName ?: "Unknown",
-                        text = it.text!!,
+                        text = it.text ?: " ",
                         rating = it.rating.toString()
                     )
                 },
