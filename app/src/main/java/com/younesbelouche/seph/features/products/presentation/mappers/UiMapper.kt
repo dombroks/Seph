@@ -12,7 +12,7 @@ object UiMapper {
             id = product.id,
             name = product.name,
             description = product.description,
-            price = "%.2f MAD".format(product.price),
+            price = "%.2f €".format(product.price),
             imageSmallUrl = product.imageSmallUrl,
             imageLargeUrl = product.imageLargeUrl,
             brandName = product.brandName,
