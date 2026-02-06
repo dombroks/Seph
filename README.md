@@ -1,12 +1,24 @@
 # Seph - Product Reviews App
 
-A modern Android application built with Jetpack Compose that displays products and their reviews from Sephora's API. The app follows Clean Architecture principles and implements the MVVM pattern with reactive state management.
+A modern Android application built with Jetpack Compose that displays products and their reviews
+from an API. The app follows Clean Architecture principles and implements the MVVM pattern
+with reactive state management.
 
 ## 📱 Screenshots
 
+<table>
+  <tr>
+    <td><img src="screenshots/screen1.jpg" width="200" alt=""/></td>
+    <td><img src="screenshots/screen2.jpg" width="200" alt=""/></td>
+    <td><img src="screenshots/screen3.jpg" width="200" alt=""/></td>
+  </tr>
+</table>
+
+
 The app features a clean, modern UI with:
+
 - Product listing with expandable reviews
-- Real-time search functionality
+- Search functionality
 - Global reviews sorting (Best to Worst / Worst to Best)
 - Loading and empty states
 
@@ -26,7 +38,6 @@ app/
         ├── data/                  # Data Layer
         │   ├── datasources/       # Remote data sources
         │   ├── dto/               # Data Transfer Objects
-        │   ├── interceptors/      # OkHttp interceptors (caching)
         │   ├── mappers/           # DTO to Domain mappers
         │   ├── repositories/      # Repository implementations
         │   └── ProductsApi.kt     # Retrofit API interface
@@ -53,76 +64,84 @@ app/
 ## 🛠️ Tech Stack
 
 ### Core
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Kotlin | 2.0.21 | Programming language |
-| Android Gradle Plugin | 8.13.2 | Build system |
-| Min SDK | 24 | Android 7.0+ |
-| Target SDK | 36 | Latest Android |
+
+| Technology            | Version | Purpose              |
+|-----------------------|---------|----------------------|
+| Kotlin                | 2.0.21  | Programming language |
+| Android Gradle Plugin | 8.13.2  | Build system         |
+| Min SDK               | 24      | Android 7.0+         |
+| Target SDK            | 36      | Latest Android       |
 
 ### UI
-| Library | Purpose |
-|---------|---------|
-| Jetpack Compose | Declarative UI framework |
-| Material 3 | Design system |
-| Coil | Image loading |
-| Navigation Compose | Navigation component |
+
+| Library            | Purpose                  |
+|--------------------|--------------------------|
+| Jetpack Compose    | Declarative UI framework |
+| Material 3         | Design system            |
+| Coil               | Image loading            |
+
 
 ### Architecture & DI
-| Library | Purpose |
-|---------|---------|
-| Hilt | Dependency injection |
-| ViewModel | State management |
-| StateFlow | Reactive state |
+
+| Library    | Purpose                  |
+|------------|--------------------------|
+| Hilt       | Dependency injection     |
+| ViewModel  | State management         |
+| StateFlow  | Reactive state           |
 | Coroutines | Asynchronous programming |
 
 ### Networking
-| Library | Purpose |
-|---------|---------|
-| Retrofit 2.9.0 | REST client |
-| OkHttp 4.11.0 | HTTP client with caching |
-| Gson 2.10.1 | JSON serialization |
+
+| Library  | Purpose                  |
+|----------|--------------------------|
+| Retrofit | REST client              |
+| OkHttp   | HTTP client with caching |
+| Gson     | JSON serialization       |
 
 ### Testing
-| Library | Purpose |
-|---------|---------|
-| JUnit 4 | Unit testing framework |
-| MockK | Kotlin mocking library |
-| Turbine | Flow testing |
-| Truth | Assertions |
-| Espresso | UI testing |
+
+| Library  | Purpose                |
+|----------|------------------------|
+| JUnit 4  | Unit testing framework |
+| MockK    | Kotlin mocking library |
+| Turbine  | Flow testing           |
 
 ## ✨ Features
 
 ### Product Listing
+
 - Displays products fetched from remote API
-- Shows product name, brand, description, and price
-- Product images loaded asynchronously with Coil
+- Shows product name, brand, and price
+
 
 ### Reviews System
+
 - Expandable reviews section for each product
 - Tap on a product to toggle reviews visibility
-- Star rating display with partial star filling based on rating value
+- Star rating display based on rating value
 - Reviews sorted by rating (Best to Worst by default)
 
 ### Search
-- Real-time search with debounce (300ms)
-- Filters products by name, brand, or description
+
+- Local search with debounce (300ms)
+- Filters products by name
 - Search as you type
 
 ### Sorting
+
 - Floating Action Button for global reviews sorting
 - Two options: Best2Worst and Worst2Best
 - Applies to all product reviews simultaneously
 
 ### State Management
+
 - Loading state with visual indicator
 - Empty state when no products match search
-- Error handling with snackbar messages
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Android Studio Hedgehog (2023.1.1) or newer
 - JDK 17
 - Android SDK with API 36
@@ -131,14 +150,14 @@ app/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/younesbelouche/seph.git
+   git clone https://github.com/dombroks/seph.git
    cd seph
    ```
 
 2. **Open in Android Studio**
-   - Open Android Studio
-   - Select "Open an existing project"
-   - Navigate to the cloned directory
+    - Open Android Studio
+    - Select "Open an existing project"
+    - Navigate to the cloned directory
 
 3. **Build the project**
    ```bash
@@ -168,12 +187,13 @@ The app fetches data from Sephora's test API:
 
 ### Endpoints
 
-| Endpoint | Description |
-|----------|-------------|
-| `GET /items.json` | Fetches list of products |
-| `GET /reviews.json` | Fetches product reviews |
+| Endpoint            | Description              |
+|---------------------|--------------------------|
+| `GET /items.json`   | Fetches list of products |
+| `GET /reviews.json` | Fetches product reviews  |
 
 ### Product Response
+
 ```json
 {
   "product_id": 123,
@@ -194,6 +214,7 @@ The app fetches data from Sephora's test API:
 ```
 
 ### Reviews Response
+
 ```json
 {
   "product_id": 123,
@@ -213,28 +234,34 @@ The app fetches data from Sephora's test API:
 The app uses Material 3 with a blue color scheme:
 
 ### Light Theme
+
 - Primary: `#1976D2` (Blue 40)
 - Secondary: `#546E7A` (Blue Grey 40)
 - Tertiary: `#0288D1` (Light Blue 40)
 
 ### Dark Theme
+
 - Primary: `#82B1FF` (Blue 80)
 - Secondary: `#B0BEC5` (Blue Grey 80)
 - Tertiary: `#80D8FF` (Light Blue 80)
 
 ### Accent Colors
+
 - Star Rating: `#FFD700` (Gold)
 
 ## 📂 Key Components
 
 ### ProductsViewModel
+
 Manages UI state and business logic:
+
 - Loads products and reviews on initialization
 - Handles search with debounce using Flow
 - Manages reviews visibility toggle
 - Implements global reviews sorting
 
 ### ProductsUiState
+
 ```kotlin
 data class ProductsUiState(
     val productsWithReviews: List<ProductWithReviewsUi> = emptyList(),
@@ -246,7 +273,9 @@ data class ProductsUiState(
 ```
 
 ### Result Wrapper
+
 Generic sealed interface for handling API responses:
+
 ```kotlin
 sealed interface Result<out T> {
     data class Success<T>(val data: T) : Result<T>
@@ -254,18 +283,6 @@ sealed interface Result<out T> {
     data object Loading : Result<Nothing>
 }
 ```
-
-## 🔧 Configuration
-
-### HTTP Caching
-The app implements HTTP caching via `CacheInterceptor`:
-- Cache size: 10 MB
-- Reduces network calls for repeated requests
-
-### Timeouts
-- Connect: 3 seconds
-- Read: 20 seconds
-- Write: 25 seconds
 
 ## 📝 Code Quality
 
@@ -283,9 +300,6 @@ The app implements HTTP caching via `CacheInterceptor`:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👤 Author
 
