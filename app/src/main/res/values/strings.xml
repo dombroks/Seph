@@ -8,4 +8,6 @@
     <string name="no_products_available">No products available</string>
     <string name="adjust_search_input">Try adjusting your search to find what you\'re looking for</string>
     <string name="check_later">Check back later for new products</string>
+    <string name="loading_products_message">Loading products...</string>
+    <string name="seach_bar_placeholder">Search...</string>
 </resources>

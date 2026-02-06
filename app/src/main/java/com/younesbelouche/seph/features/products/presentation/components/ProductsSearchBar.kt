@@ -15,9 +15,11 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.younesbelouche.seph.R
 
 @Composable
 internal fun ProductsSearchBar(
@@ -37,7 +39,7 @@ internal fun ProductsSearchBar(
             ),
         placeholder = {
             Text(
-                text = "Search...",
+                text = stringResource(R.string.seach_bar_placeholder),
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         },
