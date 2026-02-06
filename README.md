@@ -91,11 +91,11 @@ app/
 
 ### Networking
 
-| Library  | Purpose                  |
-|----------|--------------------------|
-| Retrofit | REST client              |
-| OkHttp   | HTTP client with caching |
-| Gson     | JSON serialization       |
+| Library  | Purpose            |
+|----------|--------------------|
+| Retrofit | REST client        |
+| OkHttp   | HTTP client        |
+| Gson     | JSON serialization |
 
 ### Testing
 
