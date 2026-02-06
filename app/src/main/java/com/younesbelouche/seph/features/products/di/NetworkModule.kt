@@ -5,7 +5,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.younesbelouche.seph.core.Constants
 import com.younesbelouche.seph.features.products.data.ProductsApi
-import com.younesbelouche.seph.features.products.data.interceptors.CacheInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,19 +22,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Singleton
-    @Provides
-    fun provideCacheInterceptor() = CacheInterceptor()
 
     @Singleton
     @Provides
     fun provideOkHttp(
         @ApplicationContext context: Context,
-        cacheInterceptor: CacheInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder().apply {
             cache(Cache(File(context.cacheDir, "http-cache"), 10L * 1024L * 1024L))
-            addNetworkInterceptor(cacheInterceptor)
             connectTimeout(3, TimeUnit.SECONDS)
             readTimeout(20, TimeUnit.SECONDS)
             writeTimeout(25, TimeUnit.SECONDS)
