@@ -291,7 +291,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Younes Belouche**
 
-- GitHub: [@younesbelouche](https://github.com/dombroks)
+- GitHub: [@dombroks](https://github.com/dombroks/)
 
 ---
 
